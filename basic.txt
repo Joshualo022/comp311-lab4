@@ -64,3 +64,5 @@ C 2012 2012            # slt x3, x5, x5
 C 1 0                  # add x0, x9, x10
 C 1 0                  # add x0, x1, x2
 C 0 0                  # add x0, x3, x0
+C 2012 0               # sll x9, x5, x0
+C 2012 0               # add x0, x9, x0   ; x9 = 2012
