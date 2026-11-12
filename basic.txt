@@ -1,24 +1,66 @@
 clk ReadData1 ReadData2
-0 0 0        # addi x4, x0, -20
-C (-20) 0    # addi x5, x4, 0x7F0      ; x4 = -20
-C 2012 0     # addi x6, x5, 0x701      ; x5 = 2012
-C 3805 0     # addi x7, x6, 0x531      ; x6 = 3805
-C 3805 0     # andi x14, x6, 0x123     ; rs1 = x6
-C 1 0        # andi x15, x14, 0x71C    ; rs1 = x14 = 1
-C 0 0        # andi x17, x15, 0x541    ; rs1 = x15 = 0
-C (-20) 0    # slti x18, x4, 311       ; rs1 = x4
-C 1 0        # slti x19, x18, 2        ; rs1 = x18 = 1
-C 1 0        # slti x20, x19, 0        ; rs1 = x19 = 1
-C 0 0        # slti x21, x20, -3       ; rs1 = x20 = 0
-C 0 2012        # slti x22, x21, 5        ; rs1 = x21 = 0
-C 1 0        # addi x0,  x22, 0        ; rs1 = x22 = 1 (write to x0 ignored)
-C (-20) 0    # slti x23, x4,  -20      ; rs1 = x4
-C 0 0        # addi x0,  x23, 0        ; rs1 = x23 = 0
-C 0 3805        # slti x24, x11, -90      ; x11 was never set, so 0
-C 0 0        # addi x0,  x24, 0        ; rs1 = x24 = 0
-C (-20) 0    # slti x25, x4,  0        ; rs1 = x4
-C 1 0        # addi x0,  x25, 0        ; rs1 = x25 = 1
-C 0 0        # slti x26, x11, 600      ; x11 still 0
-C 1 0        # addi x0,  x26, 0        ; rs1 = x26 = 1
-C (-20) 0    # slti x27, x4,  -1       ; rs1 = x4
-C 1 0        # addi x0,  x27, 0        ; rs1 = x27 = 1
+0 0 0                  # addi x4, x0, -20
+C (-20) 0              # addi x5, x4, 0x7F0
+C 2012 0               # addi x6, x5, 0x701
+C 3805 0               # addi x7, x6, 0x531
+C 3805 0               # andi x14, x6, 0x123
+C 1 0                  # andi x15, x14, 0x71C
+C 0 0                  # andi x17, x15, 0x541
+C (-20) 0              # slti x18, x4, 311
+C 1 0                  # slti x19, x18, 2
+C 1 0                  # slti x20, x19, 0
+C 0 0                  # slti x21, x20, -3
+C 0 2012               # slti x22, x21, 5
+C 1 0                  # addi x0,  x22, 0
+C (-20) 0              # slti x23, x4,  -20
+C 0 0                  # addi x0,  x23, 0
+C 0 3805               # slti x24, x11, -90
+C 0 0                  # addi x0,  x24, 0
+C (-20) 0              # slti x25, x4,  0
+C 1 0                  # addi x0,  x25, 0
+C 0 0                  # slti x26, x11, 600
+C 1 0                  # addi x0,  x26, 0
+C (-20) 0              # slti x27, x4,  -1
+C 1 0                  # addi x0,  x27, 0
+C 2012 3805            # add x4, x5, x6
+C 5817 2012            # add x6, x4, x5
+C 2012 0               # add x6, x5, x0
+C 2012 0               # add x0, x6, x0
+C 2012 2012            # sub x4, x5, x6
+C 0 2012               # sub x6, x4, x5
+C (-2012) 0            # sub x6, x6, x0
+C (-2012) 0            # sub x0, x6, x0
+C 2012 5134            # or x4, x5, x7
+C 6110 0               # or x0, x4, x0
+C 2012 (-2012)         # or x4, x5, x6
+C (-4) 0               # or x0, x4, x0
+C 2012 5134            # and x8, x5, x7
+C 1036 0               # and x0, x8, x0
+C (-2012) (-4)         # and x8, x6, x4
+C (-2012) 0            # and x0, x8, x0
+C 0 0                  # addi x13, x0, 31
+C 0 0                  # addi x16, x0, 1
+C 1 31                 # sll x28, x16, x13
+C 0 (-4)               # addi x3, x0, 4
+C 2012 4               # sll x2, x5, x3
+C 0 0                  # addi x1, x0, 32
+C 2012 32              # sll x9, x5, x1
+C (-2147483648) 32192  # add x0, x28, x2
+C 2012 0               # add x0, x9, x0
+C (-2147483648) 31     # srl x29, x28, x13
+C (-2012) 4            # srl x31, x6, x3
+C 1 268435330          # add x0, x29, x31
+C (-2147483648) 31     # sra x30, x28, x13
+C (-2012) 4            # sra x31, x6, x3
+C 2012 4               # sra x10, x5, x3
+C (-1) (-126)          # add x0, x30, x31
+C (-1) 1               # srl x12, x30, x16
+C 125 2147483647       # add x0, x10, x12
+C (-2147483648) 2147483647 # slt x9, x28, x12
+C 2147483647 (-2147483648) # slt x10, x12, x28
+C (-2012) 2012         # slt x1, x6, x5
+C 2012 (-2012)         # slt x2, x5, x6
+C 2012 2012            # slt x3, x5, x5
+C 1 0                  # add x0, x9, x10
+C 1 0                  # add x0, x1, x2
+C 0 0                  # add x0, x3, x0

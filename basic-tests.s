@@ -28,17 +28,62 @@
     addi x0,  x27, 0
 
     # add 
+    add x4, x5, x6
+    add x6, x4, x5
+    add x6, x5, x0
+    add x0, x6, x0
+
 
     # sub
+    sub x4, x5, x6
+    sub x6, x4, x5
+    sub x6, x6, x0 
+    sub x0, x6, x0
 
     # or
+    or x4, x5, x7
+    or x0, x4, x0
+    or x4, x5, x6
+    or x0, x4, x0
+    
 
     # and
-
-    # slt
-
+    and x8, x5, x7
+    and x0, x8, x0
+    and x8, x6, x4
+    and x0, x8, x0
+ 
     # sll 
-
-    # srl
-
-    # sra
+    addi x13, x0, 31
+    addi x16, x0, 1
+    sll x28, x16, x13
+    addi x3, x0, 4
+    sll x2, x5, x3
+    addi x1, x0, 32
+    sll x9, x5, x1
+    add x0, x28, x2
+    add x0, x9, x0
+ 
+    # srl 
+    srl x29, x28, x13
+    srl x31, x6, x3
+    add x0, x29, x31
+ 
+    # sra 
+    sra x30, x28, x13
+    sra x31, x6, x3
+    sra x10, x5, x3
+    add x0, x30, x31
+    srl x12, x30, x16
+    add x0, x10, x12
+ 
+    # slt 
+    slt x9, x28, x12
+    slt x10, x12, x28
+    slt x1, x6, x5
+    slt x2, x5, x6
+    slt x3, x5, x5
+    add x0, x9, x10
+    add x0, x1, x2
+    add x0, x3, x0
+ 
